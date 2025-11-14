@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vue Registration & Login</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    #app {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 300px;
+    }
+    h2 {
+      text-align: center;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin: 6px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #007bff;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    p.switch {
+      text-align: center;
+      margin-top: 15px;
+    }
+    p.switch a {
+      color: #007bff;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div id="app">
+  <!-- Registration Form -->
+  <div v-if="!isLoginPage">
+    <h2>Register</h2>
+    <input type="text" placeholder="Full Name" v-model="register.name">
+    <input type="email" placeholder="Email" v-model="register.email">
+    <input type="password" placeholder="Password" v-model="register.password">
+    <button @click="registerUser">Register</button>
+    <p class="switch">Already have an account? <a @click="isLoginPage = true">Login</a></p>
+  </div>
+
+  <!-- Login Form -->
+  <div v-else>
+    <h2>Login</h2>
+    <input type="email" placeholder="Email" v-model="login.email">
+    <input type="password" placeholder="Password" v-model="login.password">
+    <button @click="loginUser">Login</button>
+    <p class="switch">Don't have an account? <a @click="isLoginPage = false">Register</a></p>
+  </div>
+
+  <!-- Message -->
+  <p v-if="message" style="color:green; text-align:center;">{{ message }}</p>
+</div>
+
+<script>
+const app = Vue.createApp({
+  data() {
+
+    return {
+      isLoginPage: false,
+      register: { name: '', email: '', password: '' },
+      login: { email: '', password: '' },
+      userDB: [], // simple local array to store users
+      message: ''
+    }
+  },
+  methods: {
+    registerUser() {
+      if (!this.register.name || !this.register.email || !this.register.password) {
+        alert('Please fill all fields!');
+        return;
+      }
+      // Check if email exists
+      const exists = this.userDB.find(u => u.email === this.register.email);
+      if (exists) {
+        this.message = "User already exists!";
+        return;
+      }
+      // Save user locally
+      this.userDB.push({...this.register});
+      this.message = "Registration successful! You can login now.";
+      this.register = { name: '', email: '', password: '' };
+      this.isLoginPage = true;
+    },
+    loginUser() {
+      const user = this.userDB.find(
+        u => u.email === this.login.email && u.password === this.login.password
+      );
+      if (user) {
+        this.message = `Welcome back, ${user.name}! 🎉`;
+      } else {
+        this.message = "Invalid credentials!";
+      }
+      this.login = { email: '', password: '' };
+    }
+  }
+});
+app.mount('#app');
+</script>
+
+</body>
+</html>

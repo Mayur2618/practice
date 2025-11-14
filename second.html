@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+
+    <h1>Hello Mayur</h1>
+    <div id="app">
+       <h2>{{ message }}</h2>
+       <input v-model="message" name="mb" placeholder="enter strings"/>
+        <p>User enters : {{message}}</p>
+        <button @click="reversemsg">Reverse message</button>
+    </div>
+
+
+<script src="/second.js"></script>
+</body>
+</html>

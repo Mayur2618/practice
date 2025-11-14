@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+</head>
+<body>
+    <div id="demo1">
+        <h1> {{message}} Mayur!!</h1>
+        <input  v-model="text" name="demo" placeholder="Enter your name">
+        <p>{{text}}</p>
+        <button @click="greet">Greet</button>
+    </div>
+
+
+    <script>
+        const {createApp, ref} = Vue;
+        
+        createApp({
+            setup(){
+                const text = ref('');
+                const greet = ()=>{
+                    alert("Hello"+ " " + text.value);
+                }
+
+                return{
+                    message: "Hello",
+                   text,
+                    greet
+                    };
+            }
+        }).mount('#demo1')
+
+    </script>
+
+   
+</script>
+</body>
+</html>

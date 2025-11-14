@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+   <style>
+    #app {
+      border: dashed black 1px;
+      width: 250px;
+      padding: 0 10px 10px 10px;
+    }
+    .Bluebg{
+        display: inline-block;
+        background-color: blue;
+        color: white;
+        padding: 10px;
+    }
+
+    img {
+      width: 100px;
+      height: auto;
+    }
+
+    .myclass{
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+  </style>
+</head>
+
+<body>
+    <h1>Hello Bind test</h1>
+    <div class="app">
+        <div v-bind:class="vueClass">
+            <b>this is bind content</b>
+            <img v-bind:src="url" alt="No Image">
+        </div>
+    </div>
+
+    <div id="web">
+        <div v-bind:class="{myclass:isImportant}" :style="{ backgroundColor: isImportant ? 'yellow' : 'red'}">
+            important content of vueJs
+        </div>
+    </div>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    vueClass: 'Bluebg',
+                    url: "https://www.w3schools.com/images/w3schools_green.jpg"
+                }
+            }
+        }).mount('.app')
+
+        const web = Vue.createApp({
+            data(){
+                return{
+                    isImportant: true
+                }
+            }
+        }).mount('#web')
+    </script>
+</body>
+
+</html>

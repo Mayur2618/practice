@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+  <div id="app">
+    <h1></h1>
+    <h2>Counter: {{ count }}</h2>
+  </div>
+
+
+  <script>
+const { createApp, ref, 
+        onBeforeMount, onMounted, 
+        onBeforeUpdate, onUpdated, 
+        onBeforeUnmount, onUnmounted 
+      } = Vue;
+
+createApp({
+    setup() {
+
+        const count = ref(0);
+        let timer = null;
+
+        onBeforeMount(() => {
+            console.log("🟡 onBeforeMount → Component is about to be mounted");
+        });
+
+        onMounted(() => {
+            console.log("🟢 onMounted → Component is mounted");
+
+            timer = setInterval(() => {
+                count.value++;
+            }, 1000);
+        });
+
+        onBeforeUpdate(() => {
+            console.log("🟡 onBeforeUpdate → Data changed but DOM not updated yet");
+        });
+
+        onUpdated(() => {
+            console.log("🟢 onUpdated → DOM updated");
+        });
+
+        onBeforeUnmount(() => {
+            console.log("🔴 onBeforeUnmount → Component will be removed now");
+        });
+
+        onUnmounted(() => {
+            console.log("🔴 onUnmounted → Component fully removed");
+        });
+
+        return { count };
+    }
+}).mount('#app');
+</script>
+
+
+</body>
+</html>
+
+
+ 
